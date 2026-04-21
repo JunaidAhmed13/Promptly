@@ -93,7 +93,8 @@ export default function Dashboard({ addToast }) {
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
-      setEnhanced(data.enhanced_prompt || '')
+      const result = data.enhanced_prompt || data.output || data.text || ''
+      setEnhanced(result)
     } catch {
       setError('Enhancement failed. Check your connection and try again.')
     } finally {
