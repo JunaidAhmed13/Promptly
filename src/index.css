@@ -1,0 +1,276 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme tokens ────────────────────────────────── */
+:root {
+  /* backgrounds */
+  --bg: #080B14;
+  --bg-base: #080B14;
+  --surface: #0D1117;
+  --bg-surface: #0D1117;
+  --surface-raised: #131B2E;
+  --bg-elevated: #131B2E;
+  --border: #1E2A3A;
+  --border-subtle: #162032;
+  /* text — readable on dark */
+  --text-1: #F0F4FF;
+  --text-primary: #F0F4FF;
+  --text-2: #A8B4CC;
+  --text-secondary: #A8B4CC;
+  --text-3: #6B7A99;
+  --text-muted: #6B7A99;
+  /* accent */
+  --accent: #5C6BC0;
+  --accent-hover: #6C7DD0;
+  --accent-dim: rgba(92, 107, 192, 0.1);
+  --accent-glow: rgba(92, 107, 192, 0.25);
+  /* status */
+  --mint: #00E5BE;
+  --mint-dim: rgba(0, 229, 190, 0.1);
+  --error: #F87171;
+  --error-dim: rgba(248, 113, 113, 0.1);
+}
+
+[data-theme='light'] {
+  --bg: #F5F7FA;
+  --bg-base: #F5F7FA;
+  --surface: #FFFFFF;
+  --bg-surface: #FFFFFF;
+  --surface-raised: #F0F2F5;
+  --bg-elevated: #F0F2F5;
+  --border: #E2E8F0;
+  --border-subtle: #EDF2F7;
+  --text-1: #0D1117;
+  --text-primary: #0D1117;
+  --text-2: #374151;
+  --text-secondary: #374151;
+  --text-3: #6B7280;
+  --text-muted: #6B7280;
+  --accent-dim: rgba(92, 107, 192, 0.08);
+  --accent-glow: rgba(92, 107, 192, 0.18);
+  --mint-dim: rgba(0, 229, 190, 0.08);
+  --error-dim: rgba(248, 113, 113, 0.08);
+}
+
+/* ── Base ────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text-1);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.2s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+}
+
+/* ── Scrollbar ───────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* ── Aurora (bottom-left corner only) ───────────── */
+.aurora-wrap {
+  position: fixed;
+  bottom: -300px;
+  left: -300px;
+  width: 750px;
+  height: 750px;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(92, 107, 192, 0.07) 0deg,
+    rgba(0, 229, 190, 0.04) 120deg,
+    transparent 200deg
+  );
+  filter: blur(80px);
+  animation: aurora 22s linear infinite;
+  transition: opacity 0.3s;
+}
+
+[data-theme='light'] .aurora-wrap { opacity: 0; }
+
+@keyframes aurora {
+  0%   { transform: rotate(0deg)   scale(1); }
+  50%  { transform: rotate(180deg) scale(1.18); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ── Card ────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  border-color: rgba(92, 107, 192, 0.3);
+}
+
+.card-raised {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* ── Focus glow ──────────────────────────────────── */
+.focus-glow:focus-within {
+  border-color: rgba(92, 107, 192, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.1) !important;
+}
+
+/* ── Shimmer ─────────────────────────────────────── */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface) 25%,
+    var(--surface-raised) 50%,
+    var(--surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── Btn primary ─────────────────────────────────── */
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  box-shadow: 0 4px 20px rgba(92, 107, 192, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Btn ghost ───────────────────────────────────── */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(92, 107, 192, 0.45);
+  color: var(--text-1);
+  background: var(--accent-dim);
+}
+
+/* ── Page animation ──────────────────────────────── */
+.page-enter {
+  animation: pageEnter 0.35s ease-out both;
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Inputs ──────────────────────────────────────── */
+input[type='text'],
+input[type='email'],
+input[type='password'],
+textarea {
+  background: var(--surface);
+  color: var(--text-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: system-ui, sans-serif;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='password']:focus,
+textarea:focus {
+  border-color: rgba(92, 107, 192, 0.5);
+  box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.1);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-3);
+}
+
+textarea { resize: none; }
+
+/* ── Suggestion fade ─────────────────────────────── */
+.suggestion-fade-enter { opacity: 0; transform: translateY(4px); }
+.suggestion-fade-active { transition: opacity 0.3s ease, transform 0.3s ease; }
+
+/* ── Section divider ─────────────────────────────── */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ── Clerk: Google/social button fix ─────────────── */
+.cl-socialButtonsBlockButton {
+  background: #1A2035 !important;
+  border: 1px solid #3A4560 !important;
+  opacity: 1 !important;
+}
+
+.cl-socialButtonsBlockButton:hover {
+  background: #232B45 !important;
+  border-color: #5C6BC0 !important;
+}
+
+.cl-socialButtonsBlockButtonText,
+.cl-socialButtonsBlockButton__google span {
+  color: #F0F4FF !important;
+  opacity: 1 !important;
+}
+
+.cl-socialButtonsBlockButton svg,
+.cl-socialButtonsBlockButton img {
+  opacity: 1 !important;
+  filter: none !important;
+}
