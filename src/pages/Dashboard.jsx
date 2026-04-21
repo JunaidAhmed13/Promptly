@@ -86,7 +86,7 @@ export default function Dashboard({ addToast }) {
     setSaved(false)
 
     try {
-      const res = await fetch('http://localhost:8000/enhance', {
+      const res = await fetch('https://maddyisoffline.app.n8n.cloud/webhook/8b3f8105-649c-4492-bbdb-e8068bdc9db6', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: prompt.trim() }),
